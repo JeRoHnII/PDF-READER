@@ -10,10 +10,11 @@ from langchain_community.vectorstores import FAISS
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.chains.question_answering import load_qa_chain
 from dotenv import load_dotenv
+import os
+os.environ["GOOGLE_API_KEY"] ="AIzaSyAxuRrd_dF349H9rwQynLLDp1WwzvbUOq0"
 
-# Load environment variables
-load_dotenv()
-genai.configure(api_key=os.environ.get("GOOGLE_API_KEY"))
+# Configure API Key
+genai.configure(api_key=os.environ['GOOGLE_API_KEY'])
 
 # Initialize chat history if not present
 if "messages" not in st.session_state:
