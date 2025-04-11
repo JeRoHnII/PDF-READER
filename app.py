@@ -9,16 +9,16 @@ from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.chains.question_answering import load_qa_chain
-from dotenv import load_dotenv
-import os
-os.environ["GOOGLE_API_KEY"] ="AIzaSyAxuRrd_dF349H9rwQynLLDp1WwzvbUOq0"
+
+# Set Google API key directly
+os.environ["GOOGLE_API_KEY"] = "AIzaSyAxuRrd_dF349H9rwQynLLDp1WwzvbUOq0"
 
 # Configure API Key
-genai.configure(api_key=os.environ['GOOGLE_API_KEY'])
+genai.configure(api_key=os.environ["GOOGLE_API_KEY"])
 
 # Initialize chat history if not present
 if "messages" not in st.session_state:
-    st.session_state.messages = []  # Stores conversation history
+    st.session_state.messages = []
 
 # Path to the example PDF
 EXAMPLE_PDF_PATH = "example.pdf"
@@ -57,9 +57,9 @@ def create_vector_store(text_chunks):
         vector_store = FAISS.from_texts(text_chunks, embedding=embeddings)
         vector_store.save_local("faiss_index")
     except:
-        pass  # Ignore errors to keep it silent
+        pass  # Ignore errors silently
 
-# Process PDF on first load (No messages shown)
+# Process PDF on first load
 if "pdf_processed" not in st.session_state:
     extracted_text = extract_pdf_text(EXAMPLE_PDF_PATH)
     text_chunks = split_text_into_chunks(extracted_text)
@@ -93,8 +93,8 @@ if user_prompt:
             model = genai.GenerativeModel("gemini-1.5-flash-latest")
             response = model.generate_content(user_prompt).text
 
-    except:
-        response = "Sorry, I couldn't process your request."
+    except Exception as e:
+        response = f"Sorry, I couldn't process your request. Error: {e}"
 
     # Add AI response to chat history and display it
     st.session_state.messages.append({"role": "assistant", "content": response})
