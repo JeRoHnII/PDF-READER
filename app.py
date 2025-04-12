@@ -11,7 +11,7 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.chains.question_answering import load_qa_chain
 
 # Set Google API key directly
-os.environ["GOOGLE_API_KEY"] = "AIzaSyAFDwmNSu3KEw4aBjpo_cfRNSQ3uomCmwA"
+os.environ["GOOGLE_API_KEY"] = "AIzaSyCKWxgyFTgNkY2n3PJS_pxEJhUa0oke9IY"
 
 # Configure API Key
 genai.configure(api_key=os.environ["GOOGLE_API_KEY"])
