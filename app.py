@@ -86,11 +86,11 @@ if user_prompt:
         docs = vector_db.similarity_search(user_prompt)
 
         if docs:
-            model = ChatGoogleGenerativeAI(model="gemini-1.5-pro-latest", temperature=0.3)
+            model = ChatGoogleGenerativeAI(model="gemini-2.0-flash", temperature=0.3)
             chain = load_qa_chain(model, chain_type="stuff")
             response = chain.invoke({"input_documents": docs, "question": user_prompt}).get("output_text", "")
         else:
-            model = genai.GenerativeModel("gemini-1.5-flash-latest")
+            model = genai.GenerativeModel("gemini-2.0-flash-lite")
             response = model.generate_content(user_prompt).text
 
     except Exception as e:
